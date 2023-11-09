@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "cmmocks.name" . }}
+  labels: {{- include "cmmocks.metaLabels" . | nindent 4 }}
+  {{- with .Values.cmmocks.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "cmmocks.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.cmmocks.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "cmmocks.podLabels" . | nindent 8 }}
+      {{- with .Values.cmmocks.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: pbc-mocks-sha256
+          image: {{ default (print .Values.global.image.registry) .Values.cmmocks.image.registry }}/{{ default "/cm-mocks" .Values.cmmocks.image.repository}}:{{ default .Values.global.image.tag .Values.cmmocks.image.tag }}
+          ports:
+            - containerPort: {{ .Values.cmmocks.port }}
+              name: http-internal
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: pbc-mocks-configmap
+            - name: CLI
+              valueFrom:
+                configMapKeyRef:
+                  key: CLI
+                  name: pbc-mocks-configmap

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "tmfgeographic.name" . }}
+  labels: {{- include "tmfgeographic.metaLabels" . | nindent 4 }}
+  {{- with .Values.geographiclocationmanagement.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "tmfgeographic.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.geographiclocationmanagement.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "tmfgeographic.podLabels" . | nindent 8 }}
+      {{- with .Values.geographiclocationmanagement.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: ms-tmf-geo-location-mgmt
+          image: {{ default (print .Values.global.image.registry) .Values.geographiclocationmanagement.image.registry }}/{{ default "/tmf-geographic" .Values.geographiclocationmanagement.image.repository}}:{{ default .Values.global.image.tag .Values.geographiclocationmanagement.image.tag }}
+          ports:
+            - containerPort: {{ .Values.geographiclocationmanagement.port }}
+              name: http-internal
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: ms-tmf-geo-location-mgmt-configmap

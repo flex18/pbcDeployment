@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "apollointegration.name" . }}
+  labels: {{- include "apollointegration.metaLabels" . | nindent 4 }}
+  {{- with .Values.apollointegration.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "apollointegration.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.apollointegration.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "apollointegration.podLabels" . | nindent 8 }}
+      {{- with .Values.apollointegration.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: svc-camara-apollo-sha256
+          image: {{ default (print .Values.global.image.registry) .Values.apollointegration.image.registry }}/{{ default "/apollo-integration" .Values.apollointegration.image.repository}}:{{ default .Values.global.image.tag .Values.apollointegration.image.tag }}
+          ports:
+            - containerPort: {{ .Values.apollointegration.port }}
+              name: http-internal

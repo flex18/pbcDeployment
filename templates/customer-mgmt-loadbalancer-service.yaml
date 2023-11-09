@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels: {{- include "tmfcustomer.metaLabels" . | nindent 4 }}
+  name: {{ template "tmfcustomer.name" . }}-service
+spec:
+  selector: {{- include "tmfcustomer.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: customermanagement-http
+      port: {{ .Values.customermanagement.port }}
+      protocol: TCP
+      targetPort: {{ .Values.customermanagement.port }}
+  type: {{ .Values.customermanagement.typeService }}

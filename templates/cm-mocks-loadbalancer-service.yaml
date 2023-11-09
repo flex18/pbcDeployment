@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels: {{- include "cmmocks.metaLabels" . | nindent 4 }}
+  name: {{ template "cmmocks.name" . }}-service
+spec:
+  selector: {{- include "cmmocks.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: cmmocks-http
+      port: {{ .Values.cmmocks.port }}
+      protocol: TCP
+      targetPort: {{ .Values.cmmocks.port }}
+  type: {{ .Values.cmmocks.typeService }}

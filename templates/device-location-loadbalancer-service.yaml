@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels: {{- include "tmfdevice.metaLabels" . | nindent 4 }}
+  name: {{ template "tmfdevice.name" . }}-service
+spec:
+  selector: {{- include "tmfdevice.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: devicelocation-http
+      port: {{ .Values.devicelocation.port }}
+      protocol: TCP
+      targetPort: {{ .Values.devicelocation.port }}
+  type: {{ .Values.devicelocation.typeService }}

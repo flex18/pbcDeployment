@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  JAVA_OPTS: "-Dlogging.level.ntt.raios.nfmf.resourceinventorymgmt={{ default .Values.global.loggingLevel .Values.resourceinventorymanagement.loggingLevel }}   
+  -DRESOURCE_INVENTORY_URL={{ default .Values.global.url .Values.resourceinventorymanagement.resource.url }}
+  -DMONGO_URL={{ default .Values.global.mongo.url .Values.resourceinventorymanagement.mongo.url }}
+  -DMONGO_DB={{ default .Values.global.mongo.db .Values.resourceinventorymanagement.mongo.db }}
+  -DMONGO_USER={{ default .Values.global.mongo.user .Values.resourceinventorymanagement.mongo.user }}
+  -DMONGO_PASSWD={{ default .Values.global.mongo.password .Values.resourceinventorymanagement.mongo.password }}"
+kind: ConfigMap
+metadata:
+  labels:
+    app: {{ template "tmfresourceinventory.name" . }}
+  name: ms-resource-inventory-mgmt-configmap
+  namespace: pbc

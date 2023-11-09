@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels: {{- include "tmfaccount.metaLabels" . | nindent 4 }}
+  name: {{ template "tmfaccount.name" . }}-service
+spec:
+  selector: {{- include "tmfaccount.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: accountmanagement-http
+      port: {{ .Values.accountmanagement.port }}
+      protocol: TCP
+      targetPort: {{ .Values.accountmanagement.port }}
+  type: {{ .Values.accountmanagement.typeService }}

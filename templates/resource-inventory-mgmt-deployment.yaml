@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "tmfresourceinventory.name" . }}
+  labels: {{- include "tmfresourceinventory.metaLabels" . | nindent 4 }}
+  {{- with .Values.resourceinventorymanagement.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "tmfresourceinventory.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.resourceinventorymanagement.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "tmfresourceinventory.podLabels" . | nindent 8 }}
+      {{- with .Values.resourceinventorymanagement.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: ms-resource-inventory-mgmt
+          image: {{ default (print .Values.global.image.registry) .Values.resourceinventorymanagement.image.registry }}/{{ default "/tmf-resourceinventory" .Values.resourceinventorymanagement.image.repository}}:{{ default .Values.global.image.tag .Values.resourceinventorymanagement.image.tag }}
+          ports:
+            - containerPort: {{ .Values.resourceinventorymanagement.port }}
+              name: http-internal
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: ms-resource-inventory-mgmt-configmap

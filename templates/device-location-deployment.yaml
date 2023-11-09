@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "tmfdevice.name" . }}
+  labels: {{- include "tmfdevice.metaLabels" . | nindent 4 }}
+  {{- with .Values.devicelocation.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "tmfdevice.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.devicelocation.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "tmfdevice.podLabels" . | nindent 8 }}
+      {{- with .Values.devicelocation.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: ms-camara-device-location
+          image: {{ default (print .Values.global.image.registry) .Values.devicelocation.image.registry }}/{{ default "/tmf-device" .Values.devicelocation.image.repository}}:{{ default .Values.global.image.tag .Values.devicelocation.image.tag }}
+          ports:
+            - containerPort: {{ .Values.devicelocation.port }}
+              name: http-internal
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: ms-camara-device-location-configmap

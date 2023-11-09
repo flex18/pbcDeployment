@@ -1,0 +1,28 @@
+apiVersion: v1
+data:
+  JAVA_OPTS: "-Dlogging.level.ntt.raios.nfmf.device={{ default .Values.global.loggingLevel .Values.devicelocation.loggingLevel }}  
+  -DHOSTNAME={{ default .Values.global.hostname .Values.devicelocation.server.hostname }}
+  -DAPPLICATION_URL={{ default .Values.global.url .Values.devicelocation.server.url }}
+  -DMONGO_CLIENT_URL={{ default .Values.global.mongo.url .Values.devicelocation.persistence.mongodb.client.url }}
+  -DMONGO_DB_NAME={{ default .Values.global.mongo.db .Values.devicelocation.persistence.mongodb.client.db }}
+  -DMONGO_USER={{ default .Values.global.mongo.user .Values.devicelocation.persistence.mongodb.client.user }}
+  -DMONGO_PASSWD={{ default .Values.global.mongo.password .Values.devicelocation.persistence.mongodb.client.password }}
+  -DTMF_PROCESS_FLOW_SPEC_ID={{ default .Values.global.id .Values.devicelocation.tmf.id }}
+  -DTMF_MAP_NAME={{ default .Values.global.name .Values.devicelocation.tmf.name }}
+  -DTMF_CHANNEL_ID={{ default .Values.global.channelId .Values.devicelocation.tmf.channelId }}
+  -DTMF_CHANNEL_NAME={{ default .Values.global.channelName .Values.devicelocation.tmf.channelName }}
+  -DTMF_CHANNEL_TYPE={{ default .Values.global.channelType .Values.devicelocation.tmf.channelType }}
+  -DDEFAULT_EXPIRY_TIME={{ default .Values.global.expiryTime .Values.devicelocation.service.expiryTime }}
+  -DDATE_TIME_FORMAT={{ default .Values.global.dateTimeFormat .Values.devicelocation.service.dateTimeFormat }}
+  -DURL_KAFKA={{ default .Values.global.messaging.kafka.url .Values.devicelocation.messaging.kafka.url }}
+  -DTOPIC_EVENTS={{ default .Values.global.messaging.kafka.topicProcessFlow .Values.devicelocation.messaging.kafka.topicProcessFlow }}
+  -DGROUP_ID_KAFKA={{ default .Values.global.messaging.kafka.groupIdConfig .Values.devicelocation.messaging.kafka.groupIdConfig }}
+  -DREQUEST_TIMEOUT_MS_KAFKA={{ default .Values.global.messaging.kafka.requestTimeoutMs .Values.devicelocation.messaging.kafka.requestTimeoutMs }}
+  -DHEARTBEAT_INTERVAL_MS_KAFKA={{ default .Values.global.messaging.kafka.heartBeatIntervalMs .Values.devicelocation.messaging.kafka.heartBeatIntervalMs }}
+  -DSESSION_TIMEOUT_MS={{ default .Values.global.messaging.kafka.sessionTimeoutMs .Values.devicelocation.messaging.kafka.sessionTimeoutMs }}"
+kind: ConfigMap
+metadata:
+  labels:
+    app: {{ template "tmfdevice.name" . }}
+  name: ms-camara-device-location-configmap
+  namespace: pbc

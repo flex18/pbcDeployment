@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels: {{- include "tmfgeographic.metaLabels" . | nindent 4 }}
+  name: {{ template "tmfgeographic.name" . }}-service
+spec:
+  selector: {{- include "tmfgeographic.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: geographiclocationmanagement-http
+      port: {{ .Values.geographiclocationmanagement.port }}
+      protocol: TCP
+      targetPort: {{ .Values.geographiclocationmanagement.port }}
+  type: {{ .Values.geographiclocationmanagement.typeService }}

@@ -1,0 +1,265 @@
+global:
+  image:
+    # Default registry where the images are stored
+    registry: 357464976842.dkr.ecr.us-west-2.amazonaws.com
+    tag: latest
+  replicas: 1
+  # This configuration variables are global. If you wish, can customize by microservice.
+  #
+  # Configuration to use kafka brokers
+  #
+  messaging:
+    kafka:
+      url: strimzi-cluster-kafka-brokers.strimzi.svc:9092 # URL to connect
+      topicQosSession: qos-session-events # Topic name where quality-on-deman put messages
+      topicProcessFlow: cm-dl-process-flow # Topic name where device-location put messages
+      #topicCmNotifications: oss-cm-notifications-out # Topic name where symphony put message to micro cm-notifications
+      groupIdConfig: qos-session # Group ID to separate connections kafka to same topic
+      offsetReset: earliest # Strategy to receive message in topic. Possible values (earlies | latest), default is latest
+      requestTimeoutMs: 40000
+      heartBeatIntervalMs: 3000
+      maxPollIntervalMs: 300000
+      maxPollRecords: 500
+      sessionTimeoutMs: 10000
+      notificationUrlBase: faltanNombre.cluster.local:8084 # Default URL base to report notifications
+  # Configuration to use nats messaging
+  nats:
+    url: nats://nats.nats.svc.cluster.local:4222 # URL to connect
+    connectionTimeout: 5 # Connection timeout to nats servers in seconds
+    pingInterval: 10 # Ping interval to nats servers in seconds
+    reconnectWait: 2 # Reconnect wait time to nats servers in seconds
+    topicAutomation: sync # Topic or subject where put messages
+    eventTenant: symphony # Event tenant header to symphony system
+    eventName: automation # Event name header to symphony system
+  #
+  # Configuration to persistence layer. In this case is MongoDB
+  #
+  mongo:
+    db: tmf666
+    url: localhost:27017
+    user: root
+    password: root
+  #
+  # Configuration for vendors and external systems
+  #
+  vendor:
+    monitoring:
+      url: http://localhost:8080/monitoring
+    qos:
+      url: http://localhost:8080/qos
+    urlToken: https://ckey.open5glab.net/access/realms/nef/protocol/openid-connect/token
+    clientSecret: 44f540f1e0eb414182bfd61dad133361
+    grantType: client_credentials
+    clientId: NTTDataNaaS-QoD
+  #
+  # The logging level to see. possible values are (debug|info|warn)
+  #
+  loggingLevel: debug
+  #
+  # Configuration to basic authentication of some CM microservices
+  #
+  auth:
+    basic:
+      internalUser: a3g2>HKS)u3M[i8UC0f # Password to internal user. Can be used on all microservices
+    mainUser: mainUser # Name of main user to authenticate on APIs of all microservices
+    mainPasswd: a3g2>HKS)u3M[i8UC0f # Password of main user to authenticate on APIs of all microservices
+accountmanagement:
+  image:
+    registry: 
+    repository: ms-tmf-account-mgmt-configuration
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  eureka: {}
+  billingAccount:
+    url: https://localhost
+  mongo: {}
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+applicationfunction:
+  image:
+    registry:
+    repository: ms-network-af-configuration
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  eureka: {}
+  vendor:
+    monitoring: {}
+    qos: {}
+    urlToken:
+    clientSecret:
+    grantType:
+    clientId:
+  mongo:
+    db: function5g
+    url:
+    user: functionAdapter
+    password: functionAdapter2023
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+customermanagement:
+  image:
+    registry:
+    repository: ms-tmf-customer-mgmt
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  eureka: {}
+  customer:
+    url: https://localhost
+  mongo:
+    db: tmf629
+    url:
+    user: tmfCustomer
+    password: tmfCustomern2023
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+devicelocation:
+  image:
+    registry: 
+    repository: ms-camara-device-location
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  eureka: {}
+  server:
+    hostname: https://localhost
+    url: https://localhost
+  persistence:
+    mongodb:
+      client:
+        url: localhost:27017
+        db: deviceLocationStatus
+        user: tmfCustomer
+        password: tmfCustomern2023
+  tmf:
+    id: 2
+    name: VerifyDeviceLocation
+    channelId: 1
+    channelName: WebClient
+    channelType: Channel
+  service:
+    expiryTime: 300
+    dateTimeFormat: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+  messaging:
+    kafka:
+      groupIdConfig: cm-dl-process-flow
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+geographiclocationmanagement:
+  image:
+    registry: 
+    repository: ms-tmf-geo-location-mgmt
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  eureka: {}
+  geographicLocation:
+    url: https://localhost
+  mongo:
+    db: tmf675
+    url:
+    user: geoLocation
+    password: geoLocation2023
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+qualityondeman:
+  image:
+    registry:
+    repository: ms-camara-qos
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  eureka: {}
+  messaging:
+    kafka: {}
+  mongo:
+    db: camara_qod
+    url:
+    user: qos_user
+    password: QoD2023
+  notification:
+    url: https://application-server.com/sessions/notify
+    thread:
+      size: 10
+      name: QOD-NOTIFICATION
+  Tmf701:
+    processFlowSpecificationRef:
+      id: 1
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+resourceinventorymanagement:
+  image:
+    registry: 
+    repository: ms-resource-inventory-mgmt
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  eureka: {}
+  resource:
+    url: falta-url
+  mongo:
+    db: tmf639
+    url:
+    user: admin
+    password: yourpassword
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+apollointegration:
+  image:
+    registry: 
+    repository: svc-camara-apollo-sha256
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+cmmocks:
+  image:
+    registry: 
+    repository: pbc-mocks-sha256
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+pbcgui:
+  image:
+    registry: 
+    repository: app-pbc-camara-sha256
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels: {{- include "apollointegration.metaLabels" . | nindent 4 }}
+  name: {{ template "apollointegration.name" . }}-service
+spec:
+  selector: {{- include "apollointegration.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: apollointegration-http
+      port: {{ .Values.apollointegration.port }}
+      protocol: TCP
+      targetPort: {{ .Values.apollointegration.port }}
+  type: {{ .Values.apollointegration.typeService }}

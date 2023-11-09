@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "tmfquality.name" . }}
+  labels: {{- include "tmfquality.metaLabels" . | nindent 4 }}
+  {{- with .Values.qualityondeman.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "tmfquality.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.qualityondeman.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "tmfquality.podLabels" . | nindent 8 }}
+      {{- with .Values.qualityondeman.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: ms-camara-qos
+          image: {{ default (print .Values.global.image.registry) .Values.qualityondeman.image.registry }}/{{ default "/tmf-quality" .Values.qualityondeman.image.repository}}:{{ default .Values.global.image.tag .Values.qualityondeman.image.tag }}
+          ports:
+            - containerPort: {{ .Values.qualityondeman.port }}
+              name: http-internal
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: ms-camara-qos-configmap

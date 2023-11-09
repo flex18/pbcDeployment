@@ -1,0 +1,22 @@
+apiVersion: v2
+name: pbcDeployment
+version: 1.0.1
+appVersion: "1.0"
+description: CAMARA_microservices
+keywords:
+- account-management
+- apollo-integration
+- application-function
+- customer-management
+- device-location
+- geographic-location-management
+- mocks
+- pbc-gui
+- quality-on-demand
+- resource-inventory-management
+maintainers:
+- name: Miguel Fruto
+  email: mfrutoam@emeal.nttdata.com
+- name: Roque Javier Ducuara
+  email: roque.javier.ducuara@emeal.nttdata.com
+icon: https://5g.nttdata.com/images/logo_retina.png

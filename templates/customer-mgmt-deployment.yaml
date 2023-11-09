@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "tmfcustomer.name" . }}
+  labels: {{- include "tmfcustomer.metaLabels" . | nindent 4 }}
+  {{- with .Values.customermanagement.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "tmfcustomer.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.customermanagement.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "tmfcustomer.podLabels" . | nindent 8 }}
+      {{- with .Values.customermanagement.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: ms-tmf-customer-mgmt
+          image: {{ default (print .Values.global.image.registry) .Values.customermanagement.image.registry }}/{{ default "/tmf-customer" .Values.customermanagement.image.repository}}:{{ default .Values.global.image.tag .Values.customermanagement.image.tag }}
+          ports:
+            - containerPort: {{ .Values.customermanagement.port }}
+              name: http-internal
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: ms-tmf-customer-mgmt-configmap

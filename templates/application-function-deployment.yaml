@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "tmfapplication.name" . }}
+  labels: {{- include "tmfapplication.metaLabels" . | nindent 4 }}
+  {{- with .Values.applicationfunction.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "tmfapplication.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.applicationfunction.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "tmfapplication.podLabels" . | nindent 8 }}
+      {{- with .Values.applicationfunction.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: ms-network-af-configuration
+          image: {{ default (print .Values.global.image.registry) .Values.applicationfunction.image.registry }}/{{ default "/tmf-application" .Values.applicationfunction.image.repository}}:{{ default .Values.global.image.tag .Values.applicationfunction.image.tag }}
+          ports:
+            - containerPort: {{ .Values.applicationfunction.port }}
+              name: http-internal
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: ms-network-af-configmap

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels: {{- include "pbcgui.metaLabels" . | nindent 4 }}
+  name: {{ template "pbcgui.name" . }}-service
+spec:
+  selector: {{- include "pbcgui.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: pbcgui-http
+      port: {{ .Values.pbcgui.port }}
+      protocol: TCP
+      targetPort: {{ .Values.pbcgui.port }}
+  type: {{ .Values.pbcgui.typeService }}

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "pbcgui.name" . }}
+  labels: {{- include "pbcgui.metaLabels" . | nindent 4 }}
+  {{- with .Values.pbcgui.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "pbcgui.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.pbcgui.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "pbcgui.podLabels" . | nindent 8 }}
+      {{- with .Values.pbcgui.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: app-pbc-camara-sha256
+          image: {{ default (print .Values.global.image.registry) .Values.pbcgui.image.registry }}/{{ default "/pbc-gui" .Values.pbcgui.image.repository}}:{{ default .Values.global.image.tag .Values.pbcgui.image.tag }}
+          ports:
+            - containerPort: {{ .Values.pbcgui.port }}
+              name: http-internal

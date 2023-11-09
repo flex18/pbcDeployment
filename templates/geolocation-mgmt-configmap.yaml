@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  JAVA_OPTS: "-Dlogging.level.ntt.raios.nfmf.geographic-={{ default .Values.global.loggingLevel .Values.geographiclocationmanagement.loggingLevel }} 
+  -DGEOGRAPHIC_LOCATION_URL={{ default .Values.global.url .Values.geographiclocationmanagement.geographicLocation.url }}
+  -DMONGO_URL={{ default .Values.global.mongo.url .Values.geographiclocationmanagement.mongo.url }}
+  -DMONGO_DB={{ default .Values.global.mongo.db .Values.geographiclocationmanagement.mongo.db }}
+  -DMONGO_USER={{ default .Values.global.mongo.user .Values.geographiclocationmanagement.mongo.user }}
+  -DMONGO_PASSWD={{ default .Values.global.mongo.password .Values.geographiclocationmanagement.mongo.password }}"
+kind: ConfigMap
+metadata:
+  labels:
+    app: {{ template "tmfgeographic.name" . }}
+  name: ms-tmf-geo-location-mgmt-configmap
+  namespace: pbc
