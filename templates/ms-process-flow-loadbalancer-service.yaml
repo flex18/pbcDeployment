@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels: {{- include "flowmgmt.metaLabels" . | nindent 4 }}
+  name: {{ template "flowmgmt.name" . }}-service
+spec:
+  selector: {{- include "flowmgmt.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: flowmgmt-http
+      port: {{ .Values.flowmgmt.port }}
+      protocol: TCP
+      targetPort: {{ .Values.flowmgmt.port }}
+  type: {{ .Values.flowmgmt.typeService }}

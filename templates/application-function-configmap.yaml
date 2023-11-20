@@ -1,16 +1,6 @@
 apiVersion: v1
 data:
-JAVA_OPTS: "-Dlogging.level.ntt.raios.nfmf.application={{ default .Values.global.loggingLevel .Values.applicationfunction.loggingLevel }}   
-  -DMONITORING_EVENT_URL={{ default .Values.global.vendor.monitoring.url .Values.applicationfunction.vendor.monitoring.url }}
-  -DSESSION_QOS_URL={{ default .Values.global.vendor.qos.url .Values.applicationfunction.vendor.qos.url }}
-  -DAUTH_URL_TOKEN={{ default .Values.global.vendor.urlToken .Values.applicationfunction.vendor.urlToken }}
-  -DAUTH_CLIENT_SECRET={{ default .Values.global.vendor.clientSecret .Values.applicationfunction.vendor.clientSecret }}
-  -DAUTH_GRANT_TYPE={{ default .Values.global.vendor.grantType .Values.applicationfunction.vendor.grantType }}
-  -DAUTH_CLIENT_ID={{ default .Values.global.vendor.clientId .Values.applicationfunction.vendor.clientId }}
-  -DMONGO_URL={{ default .Values.global.mongo.url .Values.applicationfunction.mongo.url }}
-  -DMONGO_DB={{ default .Values.global.mongo.db .Values.applicationfunction.mongo.db }}
-  -DMONGO_USER={{ default .Values.global.mongo.user .Values.applicationfunction.mongo.user }}
-  -DMONGO_PASSWD={{ default .Values.global.mongo.password .Values.applicationfunction.mongo.password }}"
+JAVA_OPTS: "-Dlogging.level.com.nttdata.network.af={{ default .Values.global.loggingLevel .Values.applicationfunction.loggingLevel }} -DMONITORING_EVENT_URL={{ default .Values.global.vendor.monitoring.url .Values.applicationfunction.vendor.monitoring.url }} -DSESSION_QOS_URL={{ default .Values.global.vendor.qos.url .Values.applicationfunction.vendor.qos.url }} -DAUTH_URL_TOKEN={{ default .Values.global.vendor.urlToken .Values.applicationfunction.vendor.urlToken }} -DAUTH_CLIENT_SECRET={{ default .Values.global.vendor.clientSecret .Values.applicationfunction.vendor.clientSecret }} -DAUTH_GRANT_TYPE={{ default .Values.global.vendor.grantType .Values.applicationfunction.vendor.grantType }} -DAUTH_CLIENT_ID={{ default .Values.global.vendor.clientId .Values.applicationfunction.vendor.clientId }} -DMONGO_URL={{ default .Values.global.mongo.url .Values.applicationfunction.mongo.url }} -DMONGO_DB={{ default .Values.global.mongo.db .Values.applicationfunction.mongo.db }} -DMONGO_USER={{ default .Values.global.mongo.user .Values.applicationfunction.mongo.user }} -DMONGO_PASSWD={{ default .Values.global.mongo.password .Values.applicationfunction.mongo.password }}"
 kind: ConfigMap
 metadata:
   labels:

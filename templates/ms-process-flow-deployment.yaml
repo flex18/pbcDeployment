@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "flowmgmt.name" . }}
+  labels: {{- include "flowmgmt.metaLabels" . | nindent 4 }}
+  {{- with .Values.flowmgmt.deploymentAnnotations }}
+  annotations: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels: {{- include "flowmgmt.metaLabels" . | nindent 4 }}
+spec:
+  replicas: {{ default .Values.global.replicas .Values.flowmgmt.replicas }}
+  selector:
+    matchLabels: {{- include "pbcDeployment.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "flowmgmt.podLabels" . | nindent 8 }}
+      {{- with .Values.flowmgmt.podAnnotations }}
+      annotations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: ms-process-flow-mgmt
+          image: {{ default (print .Values.global.image.registry) .Values.flowmgmt.image.registry }}/{{ default "/flow-mgmt" .Values.flowmgmt.image.repository}}:{{ default .Values.global.image.tag .Values.flowmgmt.image.tag }}
+          ports:
+            - containerPort: {{ .Values.flowmgmt.port }}
+              name: http-internal
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: ms-process-flow-mgmt-configmap

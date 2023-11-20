@@ -329,3 +329,28 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- define "pbcgui.podLabels" -}}
 {{ include "pbcgui.selectorLabels" . }}
 {{- end }}
+
+
+{{/*flow-mgmt variables*/}}
+
+{{- define "flowmgmt.name" -}}
+{{- printf "%s" "flow-mgmt" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "flowmgmt.metaLabels" -}}
+app.kubernetes.io/component: flowmgmt
+{{ include "pbcDeployment.metaLabels" . }}
+{{- end }}
+
+{{/* Selector labels for flow-mgmt service */}}
+{{- define "flowmgmt.selectorLabels" -}}
+{{ include "pbcDeployment.selectorLabels" . }}
+app.kubernetes.io/component: flowmgmt
+app.kubernetes.io/name: {{ include "pbcDeployment.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/* Generate flow-mgmt pod labels */}}
+{{- define "flowmgmt.podLabels" -}}
+{{ include "flowmgmt.selectorLabels" . }}
+{{- end }}

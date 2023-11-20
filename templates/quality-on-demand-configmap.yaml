@@ -1,23 +1,6 @@
 apiVersion: v1
 data:
-  JAVA_OPTS: "-Dlogging.level.ntt.raios.nfmf.quality={{ default .Values.global.loggingLevel .Values.qualityondeman.loggingLevel }}   
-  -DMONGO_URL={{ default .Values.global.mongo.url .Values.qualityondeman.mongo.url }}
-  -DMONGO_DB={{ default .Values.global.mongo.db .Values.qualityondeman.mongo.db }}
-  -DMONGO_USER={{ default .Values.global.mongo.user .Values.qualityondeman.mongo.user }}
-  -DMONGO_PASSWD={{ default .Values.global.mongo.password .Values.qualityondeman.mongo.password }}
-  -DNOTIFICATION_URL={{ default .Values.global.url .Values.qualityondeman.notification.url }}
-  -DNOTIFICATION_THREAD_SIZE={{ default .Values.global.size .Values.qualityondeman.notification.thread.size }}
-  -DNOTIFICATION_THREAD_NAME={{ default .Values.global.name .Values.qualityondeman.notification.thread.name }}
-  -DURL_KAFKA={{ default .Values.global.messaging.kafka.url .Values.qualityondeman.messaging.kafka.url }}
-  -DTOPIC_EVENTS={{ default .Values.global.messaging.kafka.topicQosSession .Values.qualityondeman.messaging.kafka.topicQosSession }}
-  -DGROUP_ID_KAFKA={{ default .Values.global.messaging.kafka.groupIdConfig .Values.qualityondeman.messaging.kafka.groupIdConfig }}
-  -DOFFSET_KAFKA={{ default .Values.global.messaging.kafka.offsetReset .Values.qualityondeman.messaging.kafka.offsetReset }}
-  -DREQUEST_TIMEOUT_MS_KAFKA={{ default .Values.global.messaging.kafka.requestTimeoutMs .Values.qualityondeman.messaging.kafka.requestTimeoutMs }}
-  -DHEARTBEAT_INTERVAL_MS_KAFKA={{ default .Values.global.messaging.kafka.heartBeatIntervalMs .Values.qualityondeman.messaging.kafka.heartBeatIntervalMs }}
-  -DMAX_POLL_INTERVAL_MS={{ default .Values.global.messaging.kafka.maxPollIntervalMs .Values.qualityondeman.messaging.kafka.maxPollIntervalMs }}
-  -DMAX_POLL_RECORDS={{ default .Values.global.messaging.kafka.maxPollRecords .Values.qualityondeman.messaging.kafka.maxPollRecords }}
-  -DSESSION_TIMEOUT_MS={{ default .Values.global.messaging.kafka.sessionTimeoutMs .Values.qualityondeman.messaging.kafka.sessionTimeoutMs }}  
-  -DREFERENCE_ID={{ default .Values.global.id .Values.qualityondeman.Tmf701.processFlowSpecificationRef.id }}"
+  JAVA_OPTS: "-Dlogging.level.com.nttdata.camara.qos={{ default .Values.global.loggingLevel .Values.qualityondeman.loggingLevel }} -DMONGO_URL={{ default .Values.global.mongo.url .Values.qualityondeman.mongo.url }} -DMONGO_DB={{ default .Values.global.mongo.db .Values.qualityondeman.mongo.db }} -DMONGO_USER={{ default .Values.global.mongo.user .Values.qualityondeman.mongo.user }} -DMONGO_PASSWD={{ default .Values.global.mongo.password .Values.qualityondeman.mongo.password }} -DNOTIFICATION_URL={{ default .Values.global.url .Values.qualityondeman.notification.url }} -DNOTIFICATION_THREAD_SIZE={{ default .Values.global.size .Values.qualityondeman.notification.thread.size }} -DNOTIFICATION_THREAD_NAME={{ default .Values.global.name .Values.qualityondeman.notification.thread.name }} -DURL_KAFKA={{ default .Values.global.messaging.kafka.url .Values.qualityondeman.messaging.kafka.url }} -DTOPIC_EVENTS={{ default .Values.global.messaging.kafka.topicQosSession .Values.qualityondeman.messaging.kafka.topicQosSession }} -DGROUP_ID_KAFKA={{ default .Values.global.messaging.kafka.groupIdConfig .Values.qualityondeman.messaging.kafka.groupIdConfig }} -DOFFSET_KAFKA={{ default .Values.global.messaging.kafka.offsetReset .Values.qualityondeman.messaging.kafka.offsetReset }} -DREQUEST_TIMEOUT_MS_KAFKA={{ default .Values.global.messaging.kafka.requestTimeoutMs .Values.qualityondeman.messaging.kafka.requestTimeoutMs }} -DHEARTBEAT_INTERVAL_MS_KAFKA={{ default .Values.global.messaging.kafka.heartBeatIntervalMs .Values.qualityondeman.messaging.kafka.heartBeatIntervalMs }} -DMAX_POLL_INTERVAL_MS={{ default .Values.global.messaging.kafka.maxPollIntervalMs .Values.qualityondeman.messaging.kafka.maxPollIntervalMs }} -DMAX_POLL_RECORDS={{ default .Values.global.messaging.kafka.maxPollRecords .Values.qualityondeman.messaging.kafka.maxPollRecords }} -DSESSION_TIMEOUT_MS={{ default .Values.global.messaging.kafka.sessionTimeoutMs .Values.qualityondeman.messaging.kafka.sessionTimeoutMs }} -DREFERENCE_ID={{ default .Values.global.id .Values.qualityondeman.Tmf701.processFlowSpecificationRef.id }}"
 kind: ConfigMap
 metadata:
   labels:

@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  JAVA_OPTS: "-Dlogging.level.com.nttdata.tmf.flowmgmt={{ default .Values.global.loggingLevel .Values.flowmgmt.loggingLevel }}  -DURL_SYMPHONY={{ default .Values.global.urlGraphQl .Values.flowmgmt.vendor.symphony.urlGraphQl  }}  -DUSER_SYMPHONY={{ default .Values.global.username .Values.flowmgmt.vendor.symphony.username  }}  -DPASSWD_SYMPHONY={{ default .Values.global.password .Values.flowmgmt.vendor.symphony.password  }}  -DURL_KAFKA={{ default .Values.global.urlKafkaServer .Values.flowmgmt.kafka.urlKafkaServer  }} -DTOPIC_QOD={{ default .Values.global.topicQod .Values.flowmgmt.kafka.topicQod  }} -DTOPIC_DEVICE_LOCATION={{ default .Values.global.topicDeviceLocation .Values.flowmgmt.kafka.topicDeviceLocation  }} -DGROUP_ID_KAFKA={{ default .Values.global.groupIdConfigKafka .Values.flowmgmt.kafka.groupIdConfigKafka  }} -DOFFSET_KAFKA={{ default .Values.global.offsetReset .Values.flowmgmt.kafka.offsetReset  }} -DMONGO_URL={{ default .Values.global.mongo.url .Values.flowmgmt.mongo.url }}  -DMONGO_DB={{ default .Values.global.mongo.db .Values.flowmgmt.mongo.db }} -DMONGO_USER={{ default .Values.global.mongo.user .Values.flowmgmt.mongo.user }}  -DMONGO_PASSWD={{ default .Values.global.mongo.password .Values.flowmgmt.mongo.password }}"
+kind: ConfigMap
+metadata:
+  labels:
+    app: {{ template "flowmgmt.name" . }}
+  name: ms-process-flow-mgmt-configmap
+  namespace: pbc

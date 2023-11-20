@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="69ac8db4-de45-4f02-9f6e-5f2797e3fad0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Chart.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/_helpers.tpl" beforeDir="false" afterPath="$PROJECT_DIR$/templates/_helpers.tpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/account-mgmt-configmap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/account-mgmt-configmap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/application-function-configmap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/application-function-configmap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/customer-mgmt-configmap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/customer-mgmt-configmap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/device-location-configmap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/device-location-configmap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/geolocation-mgmt-configmap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/geolocation-mgmt-configmap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/quality-on-demand-configmap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/quality-on-demand-configmap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/resource-inventory-mgmt-configmap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/resource-inventory-mgmt-configmap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/values.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2YSE9VuyZleoVFXZTromoxPKndM" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="69ac8db4-de45-4f02-9f6e-5f2797e3fad0" name="Changes" comment="" />
+      <created>1700510433601</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1700510433601</updated>
+    </task>
+    <servers />
+  </component>
+</project>

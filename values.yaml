@@ -23,14 +23,6 @@ global:
       sessionTimeoutMs: 10000
       notificationUrlBase: faltanNombre.cluster.local:8084 # Default URL base to report notifications
   # Configuration to use nats messaging
-  nats:
-    url: nats://nats.nats.svc.cluster.local:4222 # URL to connect
-    connectionTimeout: 5 # Connection timeout to nats servers in seconds
-    pingInterval: 10 # Ping interval to nats servers in seconds
-    reconnectWait: 2 # Reconnect wait time to nats servers in seconds
-    topicAutomation: sync # Topic or subject where put messages
-    eventTenant: symphony # Event tenant header to symphony system
-    eventName: automation # Event name header to symphony system
   #
   # Configuration to persistence layer. In this case is MongoDB
   #
@@ -259,6 +251,35 @@ pbcgui:
   port: 8080
   typeService: ClusterIP
   replicas: 1
+  hpa:
+    minReplicas: 1
+    maxReplicas: 5
+    cpuTargetAverageUtilization: 60
+flowmgmt:
+  image:
+    registry:
+    repository: ms-process-flow-mgmt
+    tag:
+  port: 8080
+  typeService: ClusterIP
+  replicas: 1
+  eureka: {}
+  vendor:
+    symphony:
+      urlGraphQl: https://symphony.catalystcoe.telecomopennetworks.com/apollo
+      username: symphony@nttdata.com
+      password: symphony@nttdata.com
+  mongo:
+    db: tmf701
+    url:
+    user: processFlowM
+    password: processFlowM2023
+  kafka:
+    urlKafkaServer: localhost:9092
+    topicQod: qod-process
+    topicDeviceLocation: device-location-process
+    groupIdConfigKafka: pbc-camara
+    offsetReset: earliest
   hpa:
     minReplicas: 1
     maxReplicas: 5
